@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<body ng-app="myApp" ng-controller="todoCtrl">
+<body ng-app="myApp" ng-controller="fhCtrl">
 
-<h2>My Todo List</h2>
+<h2>My Family History List</h2>
 
-<form ng-submit="todoAdd()">
-    <input type="text" ng-model="todoInput" size="50" placeholder="Add New">
+<form ng-submit="fhAdd()">
+    <input type="text" ng-model="fhPersonInput" size="20" placeholder="Person">
+    <input type="text" ng-model="fhFatherInput" size="20" placeholder="Father">
+    <input type="text" ng-model="fhMotherInput" size="20" placeholder="Mother">
     <input type="submit" value="Add New">
 </form>
 
 <br>
 
-<div ng-repeat="x in todoList">
-    <input type="checkbox" ng-model="x.done"> <span ng-bind="x.todoText"></span>
+<div ng-repeat="x in fhList">
+    <input type="checkbox" ng-model="x.marked"> <span ng-bind="x.fhText"></span>
 </div>
 
 <p><button ng-click="remove()">Remove marked</button></p>
 
 <script>
 var app = angular.module('myApp', []); 
-app.controller('todoCtrl', function($scope) {
-    $scope.todoList = [{todoText:'Clean House', done:false}];
+app.controller('fhCtrl', function($scope) {
+    $scope.fhList = [{fhText:'Frank Jones, Billy Jones, Millie Smith', marked:false}];
 
-    $scope.todoAdd = function() {
-        $scope.todoList.push({todoText:$scope.todoInput, done:false});
-        $scope.todoInput = "";
+    $scope.fhAdd = function() {
+        $scope.fhList.push({fhText: $scope.fhPersonInput + ", " + $scope.fhFatherInput + ", " + $scope.fhMotherInput, marked:false});
+        $scope.fhPersonInput = "";
+        $scope.fhFatherInput = "";
+        $scope.fhMotherInput = "";
     };
 
     $scope.remove = function() {
-        var oldList = $scope.todoList;
-        $scope.todoList = [];
+        var oldList = $scope.fhList;
+        $scope.fhList = [];
         angular.forEach(oldList, function(x) {
-            if (!x.done) $scope.todoList.push(x);
+            if (!x.marked) $scope.fhList.push(x);
         });
     };
 });
